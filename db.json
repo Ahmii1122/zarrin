@@ -1,0 +1,153 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Technology",
+      "image": "https://via.placeholder.com/150?text=Technology"
+    },
+    {
+      "id": 2,
+      "name": "Health",
+      "image": "https://via.placeholder.com/150?text=Health"
+    },
+    {
+      "id": 3,
+      "name": "Travel",
+      "image": "https://via.placeholder.com/150?text=Travel"
+    }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "bio": "Tech enthusiast and writer.",
+      "avatar": "https://via.placeholder.com/100?text=Alice"
+    },
+    {
+      "id": 2,
+      "name": "Bob Smith",
+      "bio": "Health expert and wellness coach.",
+      "avatar": "https://via.placeholder.com/100?text=Bob"
+    },
+    {
+      "id": 3,
+      "name": "Clara Lee",
+      "bio": "Travel blogger and photographer.",
+      "avatar": "https://via.placeholder.com/100?text=Clara"
+    },
+    {
+      "id": 4,
+      "name": "David Kim",
+      "bio": "Software developer and tech writer.",
+      "avatar": "https://via.placeholder.com/100?text=David"
+    },
+    {
+      "id": 5,
+      "name": "Emma Davis",
+      "bio": "Health and lifestyle writer.",
+      "avatar": "https://via.placeholder.com/100?text=Emma"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Latest Trends in AI Technology",
+      "content": "Artificial Intelligence (AI) is evolving rapidly and reshaping industries worldwide. From natural language processing to autonomous vehicles, AI technologies are becoming more sophisticated and accessible. Key trends include the rise of generative AI models, improvements in AI ethics, and the integration of AI with Internet of Things (IoT) devices. Businesses are leveraging AI to optimize operations, enhance customer experiences, and innovate new products. As AI continues to advance, it raises important questions about privacy, job displacement, and the future of human-AI collaboration.",
+      "categoryId": 1,
+      "authorId": 1,
+      "image": "https://placehold.co/600x400?text=AI+Technology",
+      "publishedAt": "2025-05-10",
+      "views": 1200
+    },
+    {
+      "id": 2,
+      "title": "Top 10 Travel Destinations in 2025",
+      "content": "The year 2025 offers exciting travel opportunities for adventure seekers and culture lovers alike. From pristine beaches to historic cities, these top 10 destinations combine unique experiences with breathtaking landscapes. Highlights include exploring the vibrant street art in Lisbon, hiking the scenic trails of Patagonia, and immersing in the rich history of Kyoto. Sustainable tourism is also gaining momentum, encouraging travelers to make responsible choices that support local communities and protect the environment. Whether you're planning a solo trip or a family vacation, these destinations promise unforgettable memories.",
+      "categoryId": 3,
+      "authorId": 3,
+      "image": "https://placehold.co/600x400?text=Travel+Destinations",
+      "publishedAt": "2025-04-25",
+      "views": 800
+    },
+    {
+      "id": 3,
+      "title": "How to Maintain a Healthy Lifestyle",
+      "content": "Maintaining a healthy lifestyle is crucial for overall well-being and longevity. This involves a balanced diet rich in fruits, vegetables, lean proteins, and whole grains, combined with regular physical activity. Adequate sleep, stress management, and hydration are also key components. Avoiding harmful habits like smoking and excessive alcohol consumption supports physical and mental health. Incorporating mindfulness practices such as meditation can improve emotional resilience. Setting achievable goals and staying consistent with healthy habits can lead to sustained improvements and a better quality of life.",
+      "categoryId": 2,
+      "authorId": 5,
+      "image": "https://placehold.co/600x400?text=Healthy+Lifestyle",
+      "publishedAt": "2025-03-18",
+      "views": 950
+    },
+    {
+      "id": 4,
+      "title": "Understanding Quantum Computing",
+      "content": "Quantum computing is an emerging technology that leverages the principles of quantum mechanics to perform computations far beyond the capabilities of classical computers. Unlike traditional bits, quantum bits or qubits can exist in multiple states simultaneously thanks to superposition. This enables quantum computers to process vast amounts of data and solve complex problems like cryptography, optimization, and molecular modeling more efficiently. However, building scalable and error-tolerant quantum hardware remains a significant challenge. Research and development in this field are accelerating, promising revolutionary breakthroughs in science and industry.",
+      "categoryId": 1,
+      "authorId": 4,
+      "image": "https://placehold.co/600x400?text=Quantum+Computing",
+      "publishedAt": "2025-05-01",
+      "views": 1500
+    },
+    {
+      "id": 5,
+      "title": "Benefits of Meditation for Mental Health",
+      "content": "Meditation is a powerful practice that offers numerous benefits for mental health and emotional well-being. Regular meditation can reduce stress, anxiety, and symptoms of depression by promoting relaxation and mindfulness. It helps improve focus, self-awareness, and emotional regulation. Scientific studies suggest that meditation can alter brain structure, enhancing areas related to memory and compassion. Different techniques such as guided meditation, mindfulness, and loving-kindness meditation provide flexible options for practitioners. Incorporating meditation into daily routines supports resilience and overall mental wellness.",
+      "categoryId": 2,
+      "authorId": 2,
+      "image": "https://placehold.co/600x400?text=Meditation",
+      "publishedAt": "2025-02-28",
+      "views": 500
+    },
+    {
+      "id": 6,
+      "title": "A Guide to Backpacking Across Europe",
+      "content": "Backpacking across Europe is a thrilling way to explore diverse cultures, historic landmarks, and scenic landscapes on a budget. This guide covers essential tips including packing light, finding affordable accommodation like hostels and homestays, and navigating public transportation. Must-visit spots include the romantic canals of Venice, the lively streets of Barcelona, and the historic castles of Prague. Safety, travel insurance, and local customs are important considerations. With proper planning and an adventurous spirit, backpacking Europe can be a life-changing experience full of discovery and friendships.",
+      "categoryId": 3,
+      "authorId": 3,
+      "image": "https://placehold.co/600x400?text=Backpacking+Europe",
+      "publishedAt": "2025-04-10",
+      "views": 800
+    },
+    {
+      "id": 7,
+      "title": "The Future of Renewable Energy",
+      "content": "Renewable energy is rapidly transforming the global energy landscape. Technologies such as solar, wind, hydroelectric, and geothermal power are becoming more efficient and cost-effective. Governments and corporations are investing heavily in clean energy infrastructure to combat climate change and reduce carbon emissions. Innovations like energy storage solutions and smart grids enable better integration of renewables into existing power systems. The transition to renewable energy is creating new economic opportunities while addressing environmental challenges, marking a pivotal shift toward sustainable development.",
+      "categoryId": 1,
+      "authorId": 1,
+      "image": "https://placehold.co/600x400?text=Renewable+Energy",
+      "publishedAt": "2025-05-12",
+      "views": 1100
+    },
+    {
+      "id": 8,
+      "title": "Nutrition Tips for a Balanced Diet",
+      "content": "A balanced diet provides the body with essential nutrients for energy, growth, and repair. Key nutrition tips include consuming a variety of fruits and vegetables to ensure adequate vitamins and minerals intake. Incorporate whole grains, lean proteins such as fish and legumes, and healthy fats like those found in nuts and olive oil. Limiting processed foods, added sugars, and excessive salt improves health outcomes. Staying hydrated and practicing mindful eating habits contribute to maintaining a healthy weight and reducing the risk of chronic diseases. Consulting a nutritionist can help tailor a diet to individual needs.",
+      "categoryId": 2,
+      "authorId": 5,
+      "image": "https://placehold.co/600x400?text=Nutrition+Tips",
+      "publishedAt": "2025-03-05",
+      "views": 900
+    },
+    {
+      "id": 9,
+      "title": "Exploring the Hidden Gems of Southeast Asia",
+      "content": "Southeast Asia is home to numerous hidden gems beyond its popular tourist destinations. From the tranquil beaches of the Philippines' Palawan to the ancient temples of Myanmar, travelers can experience rich cultures and stunning natural beauty. Local markets, traditional festivals, and authentic cuisine provide immersive experiences. Sustainable tourism efforts are encouraging visitors to support local communities and preserve delicate ecosystems. This guide highlights lesser-known spots and practical travel tips to discover the authentic charm of Southeast Asia.",
+      "categoryId": 3,
+      "authorId": 3,
+      "image": "https://placehold.co/600x400?text=Southeast+Asia",
+      "publishedAt": "2025-04-18",
+      "views": 600
+    },
+    {
+      "id": 10,
+      "title": "Programming Best Practices for Beginners",
+      "content": "Writing clean, efficient, and maintainable code is essential for any programmer. Beginners should focus on understanding fundamental concepts such as proper naming conventions, commenting, and modular programming. Using version control systems like Git helps track changes and collaborate effectively. Debugging skills and code reviews improve quality and learning. Emphasizing readability over cleverness ensures code is understandable by others and your future self. Adopting these best practices early fosters good habits that will serve throughout your programming career.",
+      "categoryId": 1,
+      "authorId": 4,
+      "image": "https://placehold.co/600x400?text=Programming+Basics",
+      "publishedAt": "2025-05-14",
+      "views": 1300
+    }
+  ]
+}
