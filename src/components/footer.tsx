@@ -1,8 +1,8 @@
 import logo from "../assets/Logo.png";
 import fb from "../assets/Dribbble.png";
-import ig from "../assets/behance.png";
+import ig from "../assets/Behance.png";
 import ln from "../assets/Instagram.png";
-import yt from "../assets/twitter.png";
+import yt from "../assets/Twitter.png";
 
 const footer = () => {
   return (
