@@ -1,4 +1,4 @@
-import vector from "../../assets/vector.png";
+import vector from "../../assets/Vector.png";
 import hero from "../../assets/heroimg.jpg";
 import usePosts from "../../hooks/useposts";
 import { Link } from "react-router-dom";
