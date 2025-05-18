@@ -1,4 +1,4 @@
-import vector from "../assets/vector.png";
+import vector from "../assets/Vector.png";
 
 const SubscribeSec = () => {
   return (

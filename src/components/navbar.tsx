@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import { CiSearch } from "react-icons/ci";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
 import { Link, useLocation } from "react-router-dom";
