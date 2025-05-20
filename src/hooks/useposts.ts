@@ -25,8 +25,10 @@ const usePosts = () => {
     error: postsError,
   } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => API.get<Post[]>("/posts"), // Fetching posts
+    queryFn: async () =>
+      (await API.get<Post[]>("/posts?_expand=category")).data,
   });
+  console.log("🚀 ~ usePosts ~ posts:", posts);
 
   const {
     data: categories,
@@ -34,7 +36,7 @@ const usePosts = () => {
     error: categoriesError,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => API.get<Category[]>("/categories"), // Fetching categories
+    queryFn: () => API.get<Category[]>("/categories"),
   });
 
   if (postsLoading || categoriesLoading) {
@@ -46,11 +48,11 @@ const usePosts = () => {
   }
 
   // Debugging: Log the posts and categories
-  console.log("Posts:", posts?.data);
-  console.log("Categories:", categories?.data);
+  console.log("Posts:", posts);
+  console.log("Categories:", categories);
 
   // Combine posts with category names
-  const postsWithCategoryNames = posts?.data?.map((post) => {
+  const postsWithCategoryNames = posts?.map((post) => {
     const category = categories?.data?.find(
       (category) => Number(category.id) === Number(post.categoryId)
     );

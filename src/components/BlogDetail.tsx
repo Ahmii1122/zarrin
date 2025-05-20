@@ -7,7 +7,7 @@ const BlogDetail = () => {
   const { latestPosts } = useLatestPosts();
   const { id } = useParams<{ id: string }>();
   console.log("🚀 ~ BlogDetail ~ id:", id);
-  const { post, category, loading, error } = useSinglePost(id);
+  const { post, loading, error } = useSinglePost(id);
 
   if (loading) return <div className="text-center py-10">Loading...</div>;
   if (error || !post)
@@ -16,7 +16,7 @@ const BlogDetail = () => {
   return (
     <div className="max-w-contained mx-auto p-4 md:p-12 mt-20">
       <div className="flex gap-4 px-4 md:px-24">
-        <p className="font-roboto  text-xs font-bold">{category?.name}</p>
+        <p className="font-roboto  text-xs font-bold">{post.category?.name}</p>
 
         <p className="font-roboto text-sm text-tgray2">{post.publishedAt}</p>
       </div>

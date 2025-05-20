@@ -12,7 +12,7 @@ const RecentPostSec = () => {
         <div className="w-1/2">
           <div className="flex gap-6 mt-1 mb-7">
             <p className="text-xs font-roboto font-bold">
-              {latestPosts[0]?.categoryName}
+              {latestPosts[0]?.category?.name}
             </p>
             <p className="font-roboto text-xs font-medium text-tgray2">
               {latestPosts[0]?.publishedAt}
