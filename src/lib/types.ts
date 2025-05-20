@@ -7,7 +7,6 @@ interface Post {
   image: string;
   publishedAt: string;
   views: number;
-  categoryName?: string;
 }
 export interface Category {
   id: number;

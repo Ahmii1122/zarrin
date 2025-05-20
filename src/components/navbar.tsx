@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import logo from "../assets/Logo.png";
 import { CiSearch } from "react-icons/ci";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const Navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -57,9 +58,11 @@ const Navbar = () => {
                 ))}
               </ul>
               <CiSearch className="text-2xl" />
-              <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap">
-                Contact Us
-              </button>
+              <Link to={"/contactus"}>
+                <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap">
+                  Contact Us
+                </button>
+              </Link>
             </div>
           )}
         </div>
@@ -79,9 +82,11 @@ const Navbar = () => {
             ))}
           </ul>
           <CiSearch className="text-2xl" />
-          <button className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap">
-            Contact Us
-          </button>
+          <Link to={"/contactus"}>
+            <button className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap">
+              Contact Us
+            </button>
+          </Link>
         </div>
       </div>
     </div>

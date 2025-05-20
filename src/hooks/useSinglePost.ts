@@ -19,29 +19,21 @@ const useSinglePost = (id: number | string | undefined) => {
   });
 
   const {
-    data: categoriesData,
-    isLoading: categoriesLoading,
-    error: categoriesError,
+    data: categoryData,
+    isLoading: categoryLoading,
+    error: categoryError,
   } = useQuery({
-    queryKey: ["categories"],
-    queryFn: async () => (await API.get<Category[]>("/categories")).data,
+    queryKey: ["categories", postData?.categoryId],
+    enabled: !!postData?.categoryId,
+    queryFn: async () =>
+      (await API.get<Category>(`/categories/${postData?.categoryId}`)).data,
   });
 
-  const category = categoriesData?.find(
-    (cat) => cat.id === postData?.categoryId
-  );
-
-  const enrichedPost = postData
-    ? {
-        ...postData,
-        categoryName: category?.name || "Unknown Category",
-      }
-    : undefined;
-
   return {
-    post: enrichedPost,
-    loading: postLoading || categoriesLoading,
-    error: postError || categoriesError,
+    post: postData,
+    category: categoryData,
+    loading: postLoading || categoryLoading,
+    error: postError || categoryError,
   };
 };
 

@@ -5,6 +5,7 @@ import BlogPage from "./pages/blogpage/BlogPage";
 import LandingPage from "./pages/landingpage/LandingPage";
 import BlogDetail from "./components/BlogDetail";
 import About from "./pages/about";
+import Contact from "./pages/contactus/index";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blogdetail/:id" element={<BlogDetail />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contactus" element={<Contact />} />
       </Routes>
       <Footer />
     </>
