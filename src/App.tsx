@@ -16,14 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         {/* <Route path="/blog" element={<BlogPage />} /> */}
-        <Route
-          path="/blogdetail/:id"
-          element={
-            <ProtectedRoute>
-              <BlogDetail />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/blogdetail/:id" element={<BlogDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contactus" element={<Contact />} />
         <Route path="/login" element={<Login />} />
