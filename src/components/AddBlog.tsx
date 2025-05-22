@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  serverTimestamp,
-} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { useAuth } from "../firebase/auth"; // adjust path as needed
 import { convertFileToBase64 } from "../utils/convertFileToBase64";
 
@@ -24,7 +18,7 @@ const AddBlogPopup = ({
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [images, setImages] = useState<File[]>([]);
+  const [, setImages] = useState<File[]>([]);
   const [base64Images, setBase64Images] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
