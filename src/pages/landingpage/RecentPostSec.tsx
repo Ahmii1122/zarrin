@@ -15,7 +15,7 @@ const RecentPostSec = () => {
               {latestPosts[0]?.category?.name}
             </p>
             <p className="font-roboto text-xs font-medium text-tgray2">
-              {latestPosts[0]?.publishedAt}
+              {String(latestPosts[0]?.publishedAt)}
             </p>
           </div>
           <h2 className="text-[32px] font-raleway font-bold  mb-6">

@@ -1,24 +1,51 @@
-import { useQuery } from "@tanstack/react-query";
-import { API } from "../lib/axios";
+import { useState, useEffect } from "react";
+import usePosts from "./useposts";
 import type { Post } from "../lib/types";
 
-const useSinglePost = (id: number | string | undefined) => {
-  const {
-    data: postData,
-    isLoading: postLoading,
-    error: postError,
-  } = useQuery({
-    queryKey: ["post", id],
-    enabled: !!id,
-    queryFn: async () =>
-      (await API.get<Post>(`/posts/${id}?_expand=category`)).data,
-  });
+type PostWithCategory = Post & { categoryName?: string };
 
-  return {
-    post: postData,
-    loading: postLoading,
-    error: postError,
-  };
+const useSinglePost = (id: string | number | undefined) => {
+  const { posts, loading: postsLoading, error: postsError } = usePosts();
+  const [post, setPost] = useState<PostWithCategory | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!id) {
+      setPost(null);
+      return;
+    }
+
+    const findPostAndFetchCategory = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const foundPost = posts?.find((p) => p.id.toString() === id.toString());
+
+        if (!foundPost) {
+          setPost(null);
+          setLoading(false);
+          return;
+        }
+
+        let categoryName = foundPost.categoryName ?? "";
+
+        setPost({ ...foundPost, categoryName });
+      } catch (err: any) {
+        setError(err);
+        setPost(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!postsLoading && !postsError) {
+      findPostAndFetchCategory();
+    }
+  }, [id, posts, postsLoading, postsError]);
+
+  return { post, loading: loading || postsLoading, error: error || postsError };
 };
 
 export default useSinglePost;

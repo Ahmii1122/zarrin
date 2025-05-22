@@ -1,22 +1,24 @@
 interface Post {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  categoryId: number;
-  authorId: number;
-  image: string;
+  categoryId: string;
+  authorId?: number;
+  image?: string;
+  images?: string[];
   publishedAt: string;
   views: number;
   category?: Category;
   author?: Author;
+  categoryName?: string;
 }
 export interface Category {
-  id: number;
+  id: string;
   name: string;
   image: string;
 }
 export interface Author {
-  id: number;
+  id: string;
   name: string;
   bio: string;
   avatar: string;

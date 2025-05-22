@@ -2,16 +2,27 @@ import { useState, useEffect } from "react";
 import logo from "../assets/Logo.png";
 import { CiSearch } from "react-icons/ci";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
-import { Link, useLocation } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authcontext";
+import { dologout } from "../firebase/auth";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
-  // Update active state based on the current path
+  const navigate = useNavigate();
+  const { currentUser: user, userdata } = useAuth();
+
+  const handleLogout = async () => {
+    await dologout();
+    navigate("/");
+  };
+
+  console.log("userdata", userdata);
+  console.log("user", userdata?.name);
+
   useEffect(() => {
-    // Reset to null on the home page
     if (location.pathname === "/") {
       setActive(null);
     } else {
@@ -38,7 +49,7 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
           />
           {isOpen && (
-            <div className="absolute justify-between items-center right-0 mt-2 w-48 bg-white shadow-lg p-4 flex flex-col gap-4 z-50">
+            <div className="absolute  justify-between items-center right-0 mt-2 w-48 bg-white shadow-lg p-4 flex flex-col gap-4 z-50">
               <ul>
                 {links.map((link) => (
                   <Link to={link.link} key={link.name}>
@@ -48,7 +59,7 @@ const Navbar = () => {
                       }`}
                       onClick={() => {
                         setActive(link.name);
-                        setIsOpen(false); // Close the menu when a link is clicked
+                        setIsOpen(false);
                       }}
                     >
                       {link.name}
@@ -62,6 +73,22 @@ const Navbar = () => {
                   Contact Us
                 </button>
               </Link>
+              {user ? (
+                <div className=" relative">
+                  <button
+                    onClick={handleLogout}
+                    className="bg-primary px-4 py-2 rounded-md whitespace-nowrap mt-4"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link to={"/login"}>
+                  <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap mt-4">
+                    Login
+                  </button>
+                </Link>
+              )}
             </div>
           )}
         </div>
@@ -86,6 +113,27 @@ const Navbar = () => {
               Contact Us
             </button>
           </Link>
+          {user ? (
+            <div
+              onClick={handleLogout}
+              className="flex flex-row rounded-md bg-primary p-2  gap-4 cursor-pointer"
+            >
+              <RiLogoutBoxRLine color="white" size={24} />
+              <p className="text-white font-raleway font-medium text-base text-center flex items-center justify-center">
+                Logout
+              </p>
+            </div>
+          ) : (
+            location.pathname !== "/login" &&
+            location.pathname !== "/signup" && (
+              <Link to={"/login"}>
+                <button className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap ">
+                  Login
+                </button>
+              </Link>
+            )
+          )}
+          <div></div>
         </div>
       </div>
     </div>
@@ -97,5 +145,4 @@ export default Navbar;
 const links = [
   { name: "Blog", link: "/blog" },
   { name: "About", link: "/about" },
-  // Add more links here
 ];

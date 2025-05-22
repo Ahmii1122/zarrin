@@ -1,8 +1,16 @@
 import usePosts from "../../hooks/useposts";
 import PostCard from "../../components/PostCard";
 import SubscribeSec from "../../components/SubscribeSec";
+import { useAuth } from "../../firebase/auth";
+import { useState } from "react";
+import AddBlogPopup from "../../components/AddBlog";
+
 const BlogPage = () => {
   const { posts } = usePosts();
+  const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(posts);
+
   return (
     <section className="max-w-contained mx-auto mt-20 p-4 md:p-12">
       <div className="flex flex-col items-center justify-center">
@@ -18,6 +26,18 @@ const BlogPage = () => {
           articles for you to read them all along
         </p>
       </div>
+      <div className="flex justify-end items-end px-10">
+        {user && (
+          <button
+            onClick={() => setIsOpen(true)}
+            className="bg-primary text-white px-4 py-2 rounded-md mb-10 flex justify-end items-end"
+          >
+            Add New Post
+          </button>
+        )}
+      </div>
+      <AddBlogPopup isOpen={isOpen} onClose={() => setIsOpen(false)} />
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {posts?.map((post) => (
           <PostCard key={post.id} post={post} />

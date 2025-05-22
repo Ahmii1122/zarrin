@@ -3,19 +3,18 @@ import type { Post } from "../lib/types";
 
 const useLatestPosts = () => {
   const { posts } = usePosts();
-  const parseDate = (dateString: string): Date => new Date(dateString);
 
   const getLatestPosts = (posts: Post[], limit: number): Post[] => {
-    return posts
+    return [...posts] // clone array to avoid mutation
       .sort(
         (a, b) =>
-          parseDate(b.publishedAt).getTime() -
-          parseDate(a.publishedAt).getTime()
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
       )
       .slice(0, limit);
   };
+
   const getPopularPosts = (posts: Post[], limit: number): Post[] => {
-    return posts.sort((a, b) => b.views - a.views).slice(0, limit);
+    return [...posts].sort((a, b) => b.views - a.views).slice(0, limit);
   };
 
   const latestPosts = getLatestPosts(posts ?? [], 3);

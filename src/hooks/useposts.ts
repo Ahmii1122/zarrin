@@ -1,85 +1,103 @@
-import { useQuery } from "@tanstack/react-query";
-import { API } from "../lib/axios";
+import { useEffect, useState } from "react";
+import { db } from "../firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import type { Post, Category } from "../lib/types";
 
-// Define Post and Category types
-interface Post {
-  id: number;
-  title: string;
-  content: string;
-  categoryId: number;
-  authorId: number;
-  image: string;
-  publishedAt: string;
-  views: number;
-}
+const parseDate = (date: any): Date => {
+  if (date?.toDate && typeof date.toDate === "function") {
+    return date.toDate();
+  } else if (typeof date === "string") {
+    return new Date(date);
+  } else if (date instanceof Date) {
+    return date;
+  }
+  return new Date(0); // fallback to epoch if invalid
+};
 
-interface Category {
-  id: number;
-  name: string;
-}
+const formatDate = (date: any): string => {
+  const jsDate = parseDate(date);
+
+  const year = jsDate.getFullYear();
+  const month = String(jsDate.getMonth() + 1).padStart(2, "0");
+  const day = String(jsDate.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
 
 const usePosts = () => {
-  const {
-    data: posts,
-    isLoading: postsLoading,
-    error: postsError,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: async () =>
-      (await API.get<Post[]>("/posts?_expand=category")).data,
-  });
-  console.log("🚀 ~ usePosts ~ posts:", posts);
+  const [posts, setPosts] = useState<Post[] | null>(null);
+  const [categories, setCategories] = useState<Category[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  const {
-    data: categories,
-    isLoading: categoriesLoading,
-    error: categoriesError,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => API.get<Category[]>("/categories"),
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
 
-  if (postsLoading || categoriesLoading) {
-    return { postLoading: true, categoryLoading: true };
-  }
+        const categoriesSnap = await getDocs(collection(db, "categories"));
+        const categoriesData: Category[] = categoriesSnap.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<Category, "id">),
+        }));
+        setCategories(categoriesData);
 
-  if (postsError || categoriesError) {
-    return { postError: postsError, categoryError: categoriesError };
-  }
+        // Fetch posts WITHOUT ordering
+        const postsSnap = await getDocs(collection(db, "posts"));
 
-  // Debugging: Log the posts and categories
-  console.log("Posts:", posts);
-  console.log("Categories:", categories);
+        const postsData: Post[] = postsSnap.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title,
+            content: data.content,
+            categoryId: data.categoryId,
+            authorId: data.authorId,
+            images: data.images,
+            views: data.views,
+            publishedAt: data.publishedAt
+              ? formatDate(data.publishedAt)
+              : "Unknown date",
+            // keep original date for sorting
+            _rawDate: data.publishedAt,
+          };
+        });
 
-  // Combine posts with category names
-  const postsWithCategoryNames = posts?.map((post) => {
-    const category = categories?.data?.find(
-      (category) => Number(category.id) === Number(post.categoryId)
-    );
-    if (!category) {
-      console.warn(
-        `Category not found for post ID ${post.id}, categoryId ${post.categoryId}`
-      );
-    }
-    return {
-      ...post,
-      categoryName: category?.name || "Unknown Category", // Fallback if category is not found
+        // Sort locally by date descending
+        postsData.sort((a, b) => {
+          const dateA = parseDate(a.publishedAt);
+          const dateB = parseDate(b.publishedAt);
+          return dateB.getTime() - dateA.getTime();
+        });
+
+        // Map category names
+        const postsWithCategoryNames = postsData.map((post) => {
+          const category = categoriesData.find(
+            (cat) => cat.id.toString() === post.categoryId?.toString()
+          );
+          return {
+            ...post,
+            categoryName: category?.name || "Unknown Category",
+          };
+        });
+
+        setPosts(postsWithCategoryNames);
+        setLoading(false);
+      } catch (err: any) {
+        setError(err);
+        setLoading(false);
+      }
     };
-  });
 
-  // Sort posts by publishedAt
-  const sortedPosts = postsWithCategoryNames?.sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
-
-  const recentPost = sortedPosts?.[0];
+    fetchData();
+  }, []);
 
   return {
-    posts: sortedPosts,
-    postLoading: postsLoading,
-    postError: postsError,
-    recentPost,
+    posts,
+    categories,
+    loading,
+    error,
+    recentPost: posts ? posts[0] : null,
   };
 };
 
