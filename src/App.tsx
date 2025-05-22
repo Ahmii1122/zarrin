@@ -8,7 +8,6 @@ import About from "./pages/about";
 import Contact from "./pages/contactus/index";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/index";
-import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <>
