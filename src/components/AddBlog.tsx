@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
-import { useAuth } from "../firebase/auth"; // adjust path as needed
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore";
+import { useAuth } from "../firebase/auth";
 import { convertFileToBase64 } from "../utils/convertFileToBase64";
+import type { Post } from "../lib/types";
 
 type Category = {
   id: string;
   name: string;
 };
 
+interface AddBlogPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  postToEdit?: Post | null;
+  onUpdate?: (post: Post) => Promise<void>;
+}
+
 const AddBlogPopup = ({
   isOpen,
   onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) => {
+  postToEdit,
+  onUpdate,
+}: AddBlogPopupProps) => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -26,6 +39,7 @@ const AddBlogPopup = ({
 
   const db = getFirestore();
 
+  // Fetch categories when popup opens
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -46,6 +60,23 @@ const AddBlogPopup = ({
     }
   }, [isOpen, db]);
 
+  // Populate form when editing a post
+  useEffect(() => {
+    if (postToEdit) {
+      setTitle(postToEdit.title || "");
+      setContent(postToEdit.content || "");
+      setBase64Images(postToEdit.images || []);
+      setSelectedCategoryId(postToEdit.categoryId || "");
+      setImages([]);
+    } else {
+      setTitle("");
+      setContent("");
+      setBase64Images([]);
+      setSelectedCategoryId("");
+      setImages([]);
+    }
+  }, [postToEdit]);
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
@@ -61,6 +92,16 @@ const AddBlogPopup = ({
     setBase64Images((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Helper to format date nicely for published field
+  const formatPublishedDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString(undefined, options); // e.g., "May 23, 2025"
+  };
+
   const handleSave = async () => {
     if (!user) {
       alert("You must be logged in to add a blog post.");
@@ -74,20 +115,41 @@ const AddBlogPopup = ({
       alert("Please select a category.");
       return;
     }
+
     setUploading(true);
     try {
-      await addDoc(collection(db, "posts"), {
-        title,
-        content,
-        images: base64Images,
-        categoryId: selectedCategoryId,
-        authorUid: user.uid,
-        authorName: user.displayName || "Unknown",
-        createdAt: new Date().toISOString(),
-        views: 0,
-      });
+      if (postToEdit && postToEdit.id) {
+        if (onUpdate) {
+          await onUpdate({
+            ...postToEdit,
+            title,
+            content,
+            images: base64Images,
+            categoryId: selectedCategoryId,
+          });
+        }
+      } else {
+        const formatDate = (isoString: string) => {
+          const date = new Date(isoString);
+          return date.toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        };
 
-      alert("Blog post added successfully!");
+        await addDoc(collection(db, "posts"), {
+          title,
+          content,
+          images: base64Images,
+          categoryId: selectedCategoryId,
+          authorUid: user.uid,
+          authorName: user.displayName || "Unknown",
+          createdAt: formatDate(new Date().toISOString()),
+          views: 0,
+        });
+        alert("Blog post added successfully!");
+      }
       setTitle("");
       setContent("");
       setImages([]);
@@ -95,8 +157,8 @@ const AddBlogPopup = ({
       setSelectedCategoryId("");
       onClose();
     } catch (err) {
-      console.error("Error adding blog post:", err);
-      alert("Failed to add blog post.");
+      console.error("Error saving blog post:", err);
+      alert("Failed to save blog post.");
     } finally {
       setUploading(false);
     }
@@ -116,10 +178,11 @@ const AddBlogPopup = ({
           &#10005;
         </button>
 
-        <h2 className="text-center text-xl font-semibold mb-2">Blog Post</h2>
+        <h2 className="text-center text-xl font-semibold mb-2">
+          {postToEdit ? "Edit Blog Post" : "Add Blog Post"}
+        </h2>
         <p className="text-center text-gray-500 text-sm mb-6">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
+          Write your blog details below.
         </p>
 
         <div className="space-y-4">
@@ -139,17 +202,17 @@ const AddBlogPopup = ({
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-gray-700 mb-1">
+            <label htmlFor="content" className="block text-gray-700 mb-1">
               Content
             </label>
-            <input
-              id="description"
-              type="text"
+            <textarea
+              id="content"
               placeholder="Content"
               value={content}
               disabled={uploading}
               onChange={(e) => setContent(e.target.value)}
               className="w-full border border-gray-300 rounded px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+              rows={6}
             />
           </div>
 
@@ -244,7 +307,7 @@ const AddBlogPopup = ({
             uploading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          {uploading ? "Saving..." : "Save"}
+          {uploading ? "Saving..." : postToEdit ? "Update" : "Save"}
         </button>
       </div>
     </div>

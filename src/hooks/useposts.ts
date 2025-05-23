@@ -14,14 +14,13 @@ const parseDate = (date: any): Date => {
   return new Date(0); // fallback to epoch if invalid
 };
 
-const formatDate = (date: any): string => {
-  const jsDate = parseDate(date);
-
-  const year = jsDate.getFullYear();
-  const month = String(jsDate.getMonth() + 1).padStart(2, "0");
-  const day = String(jsDate.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 const usePosts = () => {
@@ -56,18 +55,15 @@ const usePosts = () => {
             authorUid: data.authorUid,
             images: data.images,
             views: data.views,
-            publishedAt: data.publishedAt
-              ? formatDate(data.publishedAt)
-              : "Unknown date",
-            // keep original date for sorting
-            _rawDate: data.publishedAt,
+            createdAt: formatDate(data.createdAt),
+            _rawDate: data.createdAt,
           };
         });
 
         // Sort locally by date descending
         postsData.sort((a, b) => {
-          const dateA = parseDate(a.publishedAt);
-          const dateB = parseDate(b.publishedAt);
+          const dateA = parseDate(a.createdAt);
+          const dateB = parseDate(b.createdAt);
           return dateB.getTime() - dateA.getTime();
         });
 

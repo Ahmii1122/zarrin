@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { docreateUserWithEmailAndPassword } from "../../firebase/auth";
 
 const Signup = () => {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,7 +19,12 @@ const Signup = () => {
     }
     setLoading(true);
     try {
-      await docreateUserWithEmailAndPassword({ name, email, password });
+      await docreateUserWithEmailAndPassword({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
       setLoading(false);
       navigate("/login");
     } catch (error: any) {
@@ -29,28 +35,28 @@ const Signup = () => {
 
   return (
     <div className="max-w-contained mx-auto mt-24 items-center justify-center flex flex-col gap-4  ">
-      <form onSubmit={handleSignup} className="flex flex-col gap-4">
+      <form onSubmit={handleSignup} className="flex flex-col gap-4 ">
         <h2 className="text-4xl font-bold text-center mb-4">Sign Up</h2>
         <div className="flex flex-row gap-2">
           <div className="flex flex-col gap-2">
             <label htmlFor="Firstname">First Name</label>
             <input
-              className=" bg-gray-100  rounded-md px-4 py-2"
+              className=" bg-gray-100  rounded-md md:px-4 py-2"
               type="text"
               placeholder=""
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               required
             />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="Lastname">Last Name</label>
             <input
-              className=" bg-gray-100  rounded-md px-4 py-2"
+              className=" bg-gray-100  rounded-md md:px-4 py-2"
               type="text"
               placeholder=""
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               required
             />
           </div>
@@ -58,7 +64,7 @@ const Signup = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input
-            className=" bg-gray-100  rounded-md px-4 py-2"
+            className=" bg-gray-100  rounded-md md:px-4 py-2"
             type="email"
             placeholder=""
             value={email}
@@ -69,7 +75,7 @@ const Signup = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Password</label>
           <input
-            className=" bg-gray-100  rounded-md px-4 py-2"
+            className=" bg-gray-100  rounded-md md:px-4 py-2"
             type="password"
             placeholder=""
             value={password}
@@ -80,7 +86,7 @@ const Signup = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
-            className=" bg-gray-100  rounded-md px-4 py-2"
+            className=" bg-gray-100  rounded-md md:px-4 py-2"
             type="password"
             placeholder=""
             value={confirmPassword}
@@ -95,7 +101,7 @@ const Signup = () => {
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
-        <p>
+        <p className="text-start">
           Already have an account?{" "}
           <span
             className="text-primary underline cursor-pointer"

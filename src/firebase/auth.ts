@@ -12,13 +12,20 @@ import { db } from "./firebase";
 import { useState, useEffect } from "react";
 
 interface userparamstype {
-  name: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+interface signInParams {
   email: string;
   password: string;
 }
 
 export const docreateUserWithEmailAndPassword = async ({
-  name,
+  firstName,
+  lastName,
   email,
   password,
 }: userparamstype) => {
@@ -28,7 +35,8 @@ export const docreateUserWithEmailAndPassword = async ({
     const docRef = await addDoc(collection(db, "users"), {
       uid: result.user.uid,
       email: email,
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       role: "reader",
       createdAt: new Date(),
     });
@@ -50,7 +58,7 @@ export const dosigninwithgoogle = async () => {
 export const dosigninwithemailandpassword = async ({
   email,
   password,
-}: userparamstype) => {
+}: signInParams) => {
   return await signInWithEmailAndPassword(auth, email, password);
 };
 

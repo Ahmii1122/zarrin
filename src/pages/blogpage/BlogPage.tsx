@@ -1,55 +1,118 @@
 import usePosts from "../../hooks/useposts";
 import PostCard from "../../components/PostCard";
-import SubscribeSec from "../../components/SubscribeSec";
-import { useAuth } from "../../firebase/auth";
-import { useState } from "react";
-import AddBlogPopup from "../../components/AddBlog";
 import CardSkeleton from "../../skeleton/CardSkeleton";
+import AddBlogPopup from "../../components/AddBlog";
+import { useState } from "react";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import type { Post } from "../../lib/types";
 
 const BlogPage = () => {
-  const { posts, loading } = usePosts();
-  const { user } = useAuth();
+  const { posts = [], loading } = usePosts();
   const [isOpen, setIsOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
+
+  const handleEdit = (post: Post) => {
+    setEditingPost(post);
+    setIsOpen(true);
+  };
+
+  const handleDelete = async (postId: string) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      try {
+        await deleteDoc(doc(db, "posts", postId));
+        alert("Deleted successfully!");
+      } catch (error) {
+        alert(
+          "Failed to delete blog: " +
+            (error instanceof Error ? error.message : "Unknown error")
+        );
+      }
+    }
+  };
+
+  const handleUpdatePost = async (updatedPost: Post) => {
+    try {
+      const postRef = doc(db, "posts", updatedPost.id);
+      await updateDoc(postRef, {
+        title: updatedPost.title,
+        content: updatedPost.content,
+        categoryName: updatedPost.categoryName,
+        images: updatedPost.images,
+      });
+      setIsOpen(false);
+      setEditingPost(null);
+      alert("Post updated successfully!");
+    } catch (error) {
+      alert(
+        "Failed to update post: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
+    }
+  };
 
   return (
-    <section className="max-w-contained mx-auto mt-20 p-4 md:p-12">
-      <div className="flex flex-col items-center justify-center">
-        <p className="text-tgray font-raleway font-bold text-2xl text-center mb-6">
-          OUR BLOGS
+    <div className="max-w-contained mx-auto md:px-20 mt-20 justify-items-center">
+      <div className="flex flex-col gap-2 items-center">
+        <h1 className="text-base font-bold font-raleway text-tgray2">
+          My Blogs
+        </h1>
+        <p className="font-bold font-raleway text-5xl mb-10">
+          Find All Your Blogs Here
         </p>
-        <p className="font-raleway font-bold text-5xl mb-6">
-          Find our all blogs from here
-        </p>
-        <p className="text-tgray font-roboto text-center text-base max-w-[750px] mb-28">
-          our blogs are written from very research research and well known
-          writers writers so that we can provide you the best blogs and articles
-          articles for you to read them all along
-        </p>
+        <button
+          onClick={() => {
+            setEditingPost(null);
+            setIsOpen(true);
+          }}
+          className="bg-primary text-white px-4 py-2 rounded-md mb-10"
+        >
+          Add New Blog
+        </button>
       </div>
 
-      <div className="flex justify-end items-end px-10">
-        {user && (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="bg-primary text-white px-4 py-2 rounded-md mb-10 flex justify-end items-end"
-          >
-            Add New Post
-          </button>
+      <div className="flex flex-col gap-4">
+        {loading ? (
+          Array(6)
+            .fill(0)
+            .map((_, idx) => <CardSkeleton key={idx} />)
+        ) : posts && posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {posts.map((post) => (
+              <PostCard
+                key={post.id}
+                post={post}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4 text-center">
+            <p className="text-tgray2 text-base font-roboto">No blogs found</p>
+            <button
+              onClick={() => {
+                setEditingPost(null);
+                setIsOpen(true);
+              }}
+              className="bg-primary max-w-[200px] mx-auto text-white px-4 py-2 rounded-md"
+            >
+              Add New Blog
+            </button>
+          </div>
         )}
       </div>
 
-      <AddBlogPopup isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {loading
-          ? Array.from({ length: 6 }).map((_, idx) => (
-              <CardSkeleton key={idx} />
-            ))
-          : posts?.map((post) => <PostCard key={post.id} post={post} />)}
-      </div>
-
-      <SubscribeSec />
-    </section>
+      <AddBlogPopup
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          setEditingPost(null);
+        }}
+        postToEdit={editingPost}
+        onUpdate={handleUpdatePost}
+      />
+    </div>
   );
 };
 

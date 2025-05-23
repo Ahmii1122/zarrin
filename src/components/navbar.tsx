@@ -36,7 +36,7 @@ const Navbar = () => {
   }, [location]);
 
   return (
-    <div className="max-w-contained mx-auto p-4 ">
+    <div className="max-w-contained mx-auto py-4 px-4 ">
       <div className="flex justify-between items-center">
         <div className="text-2xl font-bold">
           <Link to="/">
@@ -76,7 +76,15 @@ const Navbar = () => {
               {user ? (
                 <div className=" relative flex flex-col gap-4 items-center">
                   <Link to={"/myblogs"}>
-                    <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap">
+                    <button
+                      onClick={() => {
+                        setActive("My Blogs");
+                        setIsOpen(false);
+                      }}
+                      className={` px-4 py-2 rounded-md whitespace-nowrap ${
+                        active === "My Blogs" ? "bg-primary/65" : "text-tblack"
+                      }`}
+                    >
                       My Blogs
                     </button>
                   </Link>
@@ -89,7 +97,15 @@ const Navbar = () => {
                 </div>
               ) : (
                 <Link to={"/login"}>
-                  <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap mt-4">
+                  <button
+                    onClick={() => {
+                      setActive("Login");
+                      setIsOpen(false);
+                    }}
+                    className={` px-4 py-2 rounded-md whitespace-nowrap mt-4 ${
+                      active === "Login" ? "bg-primary/65" : "text-tblack"
+                    }`}
+                  >
                     Login
                   </button>
                 </Link>
@@ -145,7 +161,6 @@ const Navbar = () => {
               </Link>
             )
           )}
-          <div></div>
         </div>
       </div>
     </div>

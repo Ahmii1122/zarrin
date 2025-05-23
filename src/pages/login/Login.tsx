@@ -15,7 +15,6 @@ const Login = () => {
     const result = await dosigninwithemailandpassword({
       email: email,
       password: password,
-      name: "",
     });
     console.log(result);
     navigate("/");
@@ -30,12 +29,16 @@ const Login = () => {
 
   return (
     <div className="max-w-contained mx-auto mt-24 items-center justify-center flex flex-col gap-4">
-      <form onSubmit={handleLogin} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col gap-4 w-[400px] px-2 md:px-0"
+      >
         <h2 className="text-4xl font-bold text-center mb-4">Login</h2>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input
-            className="border border-gray-300 rounded-md px-4 py-2"
+            id="email"
+            className="w-full bg-gray-100 rounded-md md:px-4 py-2"
             type="email"
             placeholder=""
             value={email}
@@ -46,7 +49,8 @@ const Login = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Password</label>
           <input
-            className="border border-gray-300 rounded-md px-4 py-2"
+            id="password"
+            className="w-full bg-gray-100 rounded-md md:px-4 py-2"
             type="password"
             placeholder=""
             value={password}
@@ -56,26 +60,28 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap"
+          className="bg-primary text-white md:px-4 py-2 rounded-md whitespace-nowrap"
         >
           Login
         </button>
         <button
           type="button"
-          className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap"
+          className="bg-primary text-white md:px-4 py-2 rounded-md whitespace-nowrap"
           onClick={handleGoogleLogin}
         >
           Login with Google
         </button>
-        <p>
-          Don't have an account?{" "}
-          <span
-            className="text-primary underline cursor-pointer"
-            onClick={() => navigate("/signup")}
-          >
-            Sign up
-          </span>
-        </p>
+        <div className="flex items-center justify-center text-center">
+          <p className="">
+            Don't have an account?{" "}
+            <span
+              className="text-primary underline cursor-pointer"
+              onClick={() => navigate("/signup")}
+            >
+              Sign up
+            </span>
+          </p>
+        </div>
       </form>
     </div>
   );

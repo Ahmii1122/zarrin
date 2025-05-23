@@ -7,7 +7,7 @@ interface Post {
   authorUid?: string;
   image?: string;
   images?: string[];
-  publishedAt: string;
+  createdAt: string;
   views: number;
   category?: Category;
   author?: Author;

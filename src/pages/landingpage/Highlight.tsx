@@ -17,8 +17,8 @@ const Highlight = () => {
         />
         <div className="lg:absolute bottom-0 right-0 w-full lg:w-[70%] max-w-[1024px ] mx-auto bg-white  p-6 md:p-10 rounded-xl shadow-md">
           <div className="flex items-center gap-6 mb-6">
-            <p>{recentPost?.categoryId}</p>
-            <p>{String(recentPost?.publishedAt)}</p>
+            <p>{recentPost?.categoryName}</p>
+            <p>{recentPost?.createdAt}</p>
           </div>
           <h2 className="font-bold text-2xl md:text-3xl mb-3">
             {recentPost?.title}

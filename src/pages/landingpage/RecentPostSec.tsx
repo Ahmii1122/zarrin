@@ -7,7 +7,7 @@ const RecentPostSec = () => {
     <section className="max-w-contained mx-auto p-6 md:p-12 hidden md:block">
       <div className="flex gap-6">
         <div className="w-1/2">
-          <img src={latestPosts[0]?.image} alt={latestPosts[0]?.title} />
+          <img src={latestPosts?.[0]?.image} alt={latestPosts?.[0]?.title} />
         </div>
         <div className="w-1/2">
           <div className="flex gap-6 mt-1 mb-7">
@@ -15,7 +15,7 @@ const RecentPostSec = () => {
               {latestPosts[0]?.category?.name}
             </p>
             <p className="font-roboto text-xs font-medium text-tgray2">
-              {String(latestPosts[0]?.publishedAt)}
+              {latestPosts[0]?.createdAt}
             </p>
           </div>
           <h2 className="text-[32px] font-raleway font-bold  mb-6">
