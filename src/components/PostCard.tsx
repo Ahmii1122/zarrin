@@ -40,22 +40,24 @@ const PostCard = ({ post, onEdit, onDelete }: PostCardProps) => {
           </button>
         </Link>
         <div className="flex flex-row gap-5">
-          {user && post.authorUid === user?.uid && (
-            <>
-              <button
-                onClick={() => onEdit(post)}
-                className="mt-5 text-green-500 underline font-roboto font-bold text-[18px]"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => onDelete(post.id)}
-                className="mt-5 text-red-500 underline font-roboto font-bold text-[18px]"
-              >
-                Delete
-              </button>
-            </>
-          )}
+          {user &&
+            post.authorUid === user?.uid &&
+            location.pathname === "/myblogs" && (
+              <>
+                <button
+                  onClick={() => onEdit(post)}
+                  className="mt-5 text-green-500 underline font-roboto font-bold text-[18px]"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onDelete(post.id)}
+                  className="mt-5 text-red-500 underline font-roboto font-bold text-[18px]"
+                >
+                  Delete
+                </button>
+              </>
+            )}
         </div>
       </div>
     </div>

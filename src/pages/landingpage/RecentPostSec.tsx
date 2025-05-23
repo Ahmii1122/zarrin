@@ -7,7 +7,11 @@ const RecentPostSec = () => {
     <section className="max-w-contained mx-auto p-6 md:p-12 hidden md:block">
       <div className="flex gap-6">
         <div className="w-1/2">
-          <img src={latestPosts?.[0]?.image} alt={latestPosts?.[0]?.title} />
+          <img
+            className="w-full h-full object-cover"
+            src={latestPosts?.[0]?.images?.[0]}
+            alt={latestPosts?.[0]?.title}
+          />
         </div>
         <div className="w-1/2">
           <div className="flex gap-6 mt-1 mb-7">

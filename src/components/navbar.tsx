@@ -69,7 +69,12 @@ const Navbar = () => {
               </ul>
               <CiSearch className="text-2xl" />
               <Link to={"/contactus"}>
-                <button className="bg-primary px-4 py-2 rounded-md whitespace-nowrap">
+                <button
+                  onClick={() => {
+                    setActive("Contact Us");
+                  }}
+                  className="bg-primary px-4 py-2 rounded-md whitespace-nowrap"
+                >
                   Contact Us
                 </button>
               </Link>
@@ -81,8 +86,10 @@ const Navbar = () => {
                         setActive("My Blogs");
                         setIsOpen(false);
                       }}
-                      className={` px-4 py-2 rounded-md whitespace-nowrap ${
-                        active === "My Blogs" ? "bg-primary/65" : "text-tblack"
+                      className={`bg-primary px-4 py-2 rounded-md whitespace-nowrap ${
+                        active === "My Blogs"
+                          ? "bg-violet-900 text-white"
+                          : "text-tblack"
                       }`}
                     >
                       My Blogs
@@ -103,7 +110,7 @@ const Navbar = () => {
                       setIsOpen(false);
                     }}
                     className={` px-4 py-2 rounded-md whitespace-nowrap mt-4 ${
-                      active === "Login" ? "bg-primary/65" : "text-tblack"
+                      active === "Login" ? "bg-violet-900" : "text-tblack"
                     }`}
                   >
                     Login
@@ -130,14 +137,26 @@ const Navbar = () => {
           </ul>
           <CiSearch className="text-2xl" />
           <Link to={"/contactus"}>
-            <button className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap">
+            <button
+              onClick={() => {
+                setActive("Contact Us");
+              }}
+              className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap"
+            >
               Contact Us
             </button>
           </Link>
           {user ? (
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-12">
               <Link to={"/myblogs"}>
-                <button className="bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap">
+                <button
+                  onClick={() => {
+                    setActive("My Blogs");
+                  }}
+                  className={`bg-primary text-white px-4 py-2 rounded-md whitespace-nowrap ${
+                    active === "My Blogs" ? "bg-violet-900" : "text-tblack"
+                  }`}
+                >
                   My Blogs
                 </button>
               </Link>
@@ -146,7 +165,7 @@ const Navbar = () => {
                 className="flex flex-row rounded-md bg-primary p-2  gap-4 cursor-pointer"
               >
                 <RiLogoutBoxRLine color="white" size={24} />
-                <p className="text-white font-raleway font-medium text-base text-center flex items-center justify-center">
+                <p className="text-white font-raleway font-medium text-base  text-center flex items-center justify-center">
                   Logout
                 </p>
               </div>

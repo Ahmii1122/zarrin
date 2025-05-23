@@ -7,13 +7,14 @@ import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import type { Post } from "../../lib/types";
 import { useAuth } from "../../firebase/auth";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const BlogPage = () => {
   const { user } = useAuth();
   const { posts = [], loading } = usePosts();
   const [isOpen, setIsOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
-
+  console.log("Loading state in usePosts:", loading);
   const handleEdit = (post: Post) => {
     setEditingPost(post);
     setIsOpen(true);
@@ -57,10 +58,15 @@ const BlogPage = () => {
     <div className="max-w-contained mx-auto md:px-20 mt-20 justify-items-center">
       <div className="flex flex-col gap-2 items-center">
         <h1 className="text-base font-bold font-raleway text-tgray2">
-          My Blogs
+          OUR BLOGS
         </h1>
         <p className="font-bold font-raleway text-5xl mb-10">
-          Find All Your Blogs Here
+          Find our all blogs from here
+        </p>
+        <p className="text-base font-roboto text-tgray2">
+          our blogs are written from very research research and well known
+          writers writers so that we can provide you the best blogs and articles
+          articles for you to read them all along
         </p>
         {user && (
           <button
@@ -75,11 +81,15 @@ const BlogPage = () => {
         )}
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className=" max-w-contained mx-auto flex flex-col gap-4">
         {loading ? (
-          Array(6)
-            .fill(0)
-            .map((_, idx) => <CardSkeleton key={idx} />)
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20 lg:grid-cols-3 gap-10">
+            {Array(6)
+              .fill(0)
+              .map((_, idx) => (
+                <CardSkeleton key={idx} />
+              ))}
+          </div>
         ) : posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {posts.map((post) => (
