@@ -1,4 +1,4 @@
-import frame from "../../assets/frame.png";
+import frame from "../../assets/Frame.png";
 import email from "../../assets/email.png";
 import phone from "../../assets/phone.png";
 import map from "../../assets/map.jpg";
