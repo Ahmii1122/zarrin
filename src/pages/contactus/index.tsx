@@ -21,7 +21,7 @@ const index = () => {
           </div>
           <h4 className="font-bold text-xl text-primary mb-5">Office</h4>
           <p className="text-base font-raleway text-gray-400 mb-11">
-            Victoria Street, London, UK
+            Techomnis Wapda Town, Lahore, Pakistan
           </p>
         </div>
 
@@ -32,7 +32,7 @@ const index = () => {
           </div>
           <h4 className="font-bold text-xl text-primary mb-5">Email</h4>
           <p className="text-base font-raleway text-gray-400 mb-11">
-            hello@samzen.com
+            ahmadabbas7925@gmail.com
           </p>
         </div>
 
@@ -43,7 +43,7 @@ const index = () => {
           </div>
           <h4 className="font-bold text-xl text-primary mb-5">Phone</h4>
           <p className="text-base font-raleway text-gray-400 mb-11">
-            +001 234 567 3451
+            +92 309 4055144
           </p>
         </div>
       </div>
