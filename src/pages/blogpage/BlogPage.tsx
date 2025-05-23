@@ -6,8 +6,10 @@ import { useState } from "react";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import type { Post } from "../../lib/types";
+import { useAuth } from "../../firebase/auth";
 
 const BlogPage = () => {
+  const { user } = useAuth();
   const { posts = [], loading } = usePosts();
   const [isOpen, setIsOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
@@ -60,15 +62,17 @@ const BlogPage = () => {
         <p className="font-bold font-raleway text-5xl mb-10">
           Find All Your Blogs Here
         </p>
-        <button
-          onClick={() => {
-            setEditingPost(null);
-            setIsOpen(true);
-          }}
-          className="bg-primary text-white px-4 py-2 rounded-md mb-10"
-        >
-          Add New Blog
-        </button>
+        {user && (
+          <button
+            onClick={() => {
+              setEditingPost(null);
+              setIsOpen(true);
+            }}
+            className="bg-primary text-white px-4 py-2 rounded-md mb-10"
+          >
+            Add New Blog
+          </button>
+        )}
       </div>
 
       <div className="flex flex-col gap-4">

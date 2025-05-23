@@ -13,8 +13,6 @@ const BlogDetail = () => {
   if (error || !post)
     return <div className="text-center py-10">Error loading blog post.</div>;
 
-  console.log(post);
-
   return (
     <div className="max-w-contained mx-auto p-4 md:p-12 mt-20">
       <div className="flex gap-4 px-4 md:px-24">
