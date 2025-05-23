@@ -21,7 +21,7 @@ const BlogDetail = () => {
         <p className="font-roboto  text-xs font-bold">{post.categoryName}</p>
 
         <p className="font-roboto text-sm text-tgray2">
-          {String(post.publishedAt)}
+          {String(post.createdAt)}
         </p>
       </div>
       <p className="font-raleway font-bold text-5xl px-4 md:px-24 mt-8 ">
@@ -43,7 +43,12 @@ const BlogDetail = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-20 mb-28">
         {latestPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard
+            key={post.id}
+            post={post}
+            onEdit={() => {}}
+            onDelete={() => {}}
+          />
         ))}
       </div>
       <SubscribeSec />

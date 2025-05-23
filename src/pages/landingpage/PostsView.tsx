@@ -24,7 +24,12 @@ const PostsView = () => {
 "
         >
           {latestPosts?.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard
+              key={post.id}
+              post={post}
+              onEdit={() => {}}
+              onDelete={() => {}}
+            />
           ))}
         </div>
       </div>
@@ -43,7 +48,12 @@ const PostsView = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-auto">
           {popularPosts?.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard
+              key={post.id}
+              post={post}
+              onEdit={() => {}}
+              onDelete={() => {}}
+            />
           ))}
         </div>
       </div>

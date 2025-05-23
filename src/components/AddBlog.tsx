@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  Timestamp,
-} from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { useAuth } from "../firebase/auth";
 import { convertFileToBase64 } from "../utils/convertFileToBase64";
 import type { Post } from "../lib/types";
@@ -90,16 +84,6 @@ const AddBlogPopup = ({
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
     setBase64Images((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  // Helper to format date nicely for published field
-  const formatPublishedDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleDateString(undefined, options); // e.g., "May 23, 2025"
   };
 
   const handleSave = async () => {

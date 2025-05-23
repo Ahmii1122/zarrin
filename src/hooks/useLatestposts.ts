@@ -8,7 +8,7 @@ const useLatestPosts = () => {
     return [...posts] // clone array to avoid mutation
       .sort(
         (a, b) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       )
       .slice(0, limit);
   };
