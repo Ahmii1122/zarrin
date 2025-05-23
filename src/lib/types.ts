@@ -4,6 +4,7 @@ interface Post {
   content: string;
   categoryId: string;
   authorId?: number;
+  authorUid?: string;
   image?: string;
   images?: string[];
   publishedAt: string;

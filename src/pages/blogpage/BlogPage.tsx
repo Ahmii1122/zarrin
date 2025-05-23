@@ -4,12 +4,12 @@ import SubscribeSec from "../../components/SubscribeSec";
 import { useAuth } from "../../firebase/auth";
 import { useState } from "react";
 import AddBlogPopup from "../../components/AddBlog";
+import CardSkeleton from "../../skeleton/CardSkeleton";
 
 const BlogPage = () => {
-  const { posts } = usePosts();
+  const { posts, loading } = usePosts();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  console.log(posts);
 
   return (
     <section className="max-w-contained mx-auto mt-20 p-4 md:p-12">
@@ -26,6 +26,7 @@ const BlogPage = () => {
           articles for you to read them all along
         </p>
       </div>
+
       <div className="flex justify-end items-end px-10">
         {user && (
           <button
@@ -36,13 +37,17 @@ const BlogPage = () => {
           </button>
         )}
       </div>
+
       <AddBlogPopup isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {posts?.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {loading
+          ? Array.from({ length: 6 }).map((_, idx) => (
+              <CardSkeleton key={idx} />
+            ))
+          : posts?.map((post) => <PostCard key={post.id} post={post} />)}
       </div>
+
       <SubscribeSec />
     </section>
   );

@@ -8,13 +8,14 @@ import About from "./pages/about";
 import Contact from "./pages/contactus/index";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/index";
+import MyBlogs from "./pages/myblogs/MyBlogs";
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/blog" element={<BlogPage />} /> */}
+        <Route path="/myblogs" element={<MyBlogs />} />
         <Route path="/blogdetail/:id" element={<BlogDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contactus" element={<Contact />} />

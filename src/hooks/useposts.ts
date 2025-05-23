@@ -53,6 +53,7 @@ const usePosts = () => {
             content: data.content,
             categoryId: data.categoryId,
             authorId: data.authorId,
+            authorUid: data.authorUid,
             images: data.images,
             views: data.views,
             publishedAt: data.publishedAt
