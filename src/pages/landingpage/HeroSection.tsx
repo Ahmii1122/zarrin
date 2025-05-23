@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const { posts } = usePosts();
-  console.log(posts);
 
   return (
     <section className="relative max-w-contained mx-auto bg-primary z-10 overflow-hidden">

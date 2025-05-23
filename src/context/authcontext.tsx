@@ -26,14 +26,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [userdata, setUserdata] = useState<UserData | null>(null);
 
   const fetchUserData = async (user: User) => {
-    console.log("Fetching user data for uid:", user.uid);
     const usersRef = collection(db, "users");
     const q = query(usersRef, where("uid", "==", user.uid));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
       const docSnap = querySnapshot.docs[0];
-      console.log("User data found:", docSnap.data());
       setUserdata(docSnap.data() as UserData);
     } else {
       console.log("No user data found for uid:", user.uid);

@@ -32,7 +32,7 @@ export const docreateUserWithEmailAndPassword = async ({
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     console.log("result", result);
-    const docRef = await addDoc(collection(db, "users"), {
+    await addDoc(collection(db, "users"), {
       uid: result.user.uid,
       email: email,
       firstName: firstName,
@@ -41,7 +41,6 @@ export const docreateUserWithEmailAndPassword = async ({
       createdAt: new Date(),
     });
     return result.user.uid;
-    console.log("docRef", docRef);
     return result;
   } catch (error) {
     console.log(error);

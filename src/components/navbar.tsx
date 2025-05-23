@@ -12,15 +12,12 @@ const Navbar = () => {
   const [active, setActive] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const { currentUser: user, userdata } = useAuth();
+  const { currentUser: user } = useAuth();
 
   const handleLogout = async () => {
     await dologout();
     navigate("/");
   };
-
-  console.log("userdata", userdata);
-  console.log("user", userdata?.name);
 
   useEffect(() => {
     if (location.pathname === "/") {

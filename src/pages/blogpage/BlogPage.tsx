@@ -14,7 +14,7 @@ const BlogPage = () => {
   const { posts = [], loading } = usePosts();
   const [isOpen, setIsOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
-  console.log("Loading state in usePosts:", loading);
+
   const handleEdit = (post: Post) => {
     setEditingPost(post);
     setIsOpen(true);
@@ -63,7 +63,7 @@ const BlogPage = () => {
         <p className="font-bold font-raleway text-5xl mb-10">
           Find our all blogs from here
         </p>
-        <p className="text-base font-roboto text-tgray2">
+        <p className="text-base font-roboto text-tgray2 max-w-[750px] text-center">
           our blogs are written from very research research and well known
           writers writers so that we can provide you the best blogs and articles
           articles for you to read them all along

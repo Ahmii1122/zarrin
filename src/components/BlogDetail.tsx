@@ -6,7 +6,6 @@ import useSinglePost from "../hooks/useSinglePost";
 const BlogDetail = () => {
   const { latestPosts } = useLatestPosts();
   const { id } = useParams<{ id: string }>();
-  console.log("🚀 ~ BlogDetail ~ id:", id);
   const { post, loading, error } = useSinglePost(id);
 
   if (loading) return <div className="text-center py-10">Loading...</div>;

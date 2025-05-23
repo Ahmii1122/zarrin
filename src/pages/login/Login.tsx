@@ -12,11 +12,10 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await dosigninwithemailandpassword({
+    await dosigninwithemailandpassword({
       email: email,
       password: password,
     });
-    console.log(result);
     navigate("/");
   };
 
